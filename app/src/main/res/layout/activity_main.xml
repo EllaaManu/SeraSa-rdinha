@@ -10,12 +10,19 @@
     android:padding="20dp"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="253dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/catmoney" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Valor do Empréstimo"
+        android:text="Valor do Emprrrréstimo"
         android:textStyle="bold" />
 
     <EditText
@@ -30,7 +37,7 @@
         android:shadowColor="#3F51B5"
         android:text="0.00"
         android:textAlignment="center"
-        android:textColor="#095F2C"
+        android:textColor="#FFB300"
         android:textSize="34sp"
         android:textStyle="bold" />
 
@@ -90,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="0.00"
-        android:textColor="#3F51B5"
+        android:textColor="#03A9F4"
         android:textSize="60sp"
         android:textStyle="bold" />
 
