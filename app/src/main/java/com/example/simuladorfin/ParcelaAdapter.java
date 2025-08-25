@@ -30,6 +30,7 @@ public class ParcelaAdapter extends ArrayAdapter<Parcela> {
         TextView tvNumero=convertView.findViewById(R.id.tvNumero);
         TextView tvParcela2=convertView.findViewById(R.id.tvParcela2);
         TextView tvSaldo=convertView.findViewById(R.id.tvSaldo);
+
         tvNumero.setText(""+getItem(position).getNum());
         tvParcela2.setText(String.format("%.2f",getItem(position).getValor()));
         tvSaldo.setText(String.format("%.2f",getItem(position).getSaldo()));

@@ -51,7 +51,6 @@ public class PlanilhaActivity extends AppCompatActivity {
         prazo=getIntent().getIntExtra("prazo",0);
         tvValor.setText(""+valor);
         tvJuros2.setText(""+juros);
-        parcela=Price.calcParcela(valor,juros,prazo);
         listView.addHeaderView(getLayoutInflater().inflate(R.layout.header_layout,listView,false));
         gerarPlanilhaPrice();
         //gerando evento para o listview
@@ -86,24 +85,56 @@ public class PlanilhaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId()== R.id.it_sacre)
-                Toast.makeText(this,"Acessou a opção SACRE",Toast.LENGTH_LONG).show();
-        if (item.getItemId()== R.id.it_price)
+        if (item.getItemId()== R.id.it_sacre) {
+            Toast.makeText(this,"Acessou a opção SACRE",Toast.LENGTH_LONG).show();
+            gerarPlanilhaSacre();
+        }
+        if (item.getItemId()== R.id.it_price) {
             Toast.makeText(this,"Acessou a opção PRICE",Toast.LENGTH_LONG).show();
+            gerarPlanilhaPrice();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     private void gerarPlanilhaPrice() {
         List<Parcela> parcelaList=new ArrayList<>();
+
+        parcela=Price.calcParcela(valor,juros,prazo);
+
         double jurosParcela, saldoDevedor=valor;
+
         for(int i=1; i<=prazo; i++){
             jurosParcela=saldoDevedor*juros/100;
             saldoDevedor-=parcela-jurosParcela;
             Parcela p = new Parcela(i,parcela,jurosParcela,parcela-jurosParcela,saldoDevedor);
             parcelaList.add(p);
         }
+
         ParcelaAdapter parcelaAdapter=new ParcelaAdapter(this,
                 R.layout.item_layout, parcelaList);
+        listView.setAdapter(parcelaAdapter);
+    }
+
+    private void gerarPlanilhaSacre() {
+        List<Parcela> parcelaList=new ArrayList<>();
+        double amortizacao, saldoDevedor=valor;
+
+        for (int i = 1; i <= prazo; i ++) {
+            parcela = Sacre.calcParcela(saldoDevedor, prazo - (i - 1), juros);
+            amortizacao = Sacre.calcAmortizacao(saldoDevedor, prazo - (i - 1));
+
+            saldoDevedor -= amortizacao;
+
+            Parcela p = new Parcela(i, parcela, parcela - amortizacao, amortizacao, saldoDevedor);
+            parcelaList.add(p);
+        }
+
+        ParcelaAdapter parcelaAdapter = new ParcelaAdapter(
+                this,
+                R.layout.item_layout,
+                parcelaList
+        );
         listView.setAdapter(parcelaAdapter);
     }
 }
