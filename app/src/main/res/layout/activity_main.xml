@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Valor do Empréstimo"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etValor"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:ems="10"
+        android:hint="Informe o valor do empréstimo"
+        android:inputType="numberDecimal"
+        android:outlineAmbientShadowColor="#3F51B5"
+        android:outlineSpotShadowColor="#E91E63"
+        android:shadowColor="#3F51B5"
+        android:text="0.00"
+        android:textAlignment="center"
+        android:textColor="#095F2C"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="10dp"
+        android:text="Prazo em Meses"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/sbPrazo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="48"
+        android:min="1"
+        android:progress="12" />
+
+    <TextView
+        android:id="@+id/tvPrazo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="12"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="10dp"
+        android:text="Juros"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/sbJuros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="1200"
+        android:min="0"
+        android:progress="200" />
+
+    <TextView
+        android:id="@+id/tvJuros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="2.00"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvParcela"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="0.00"
+        android:textColor="#3F51B5"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
