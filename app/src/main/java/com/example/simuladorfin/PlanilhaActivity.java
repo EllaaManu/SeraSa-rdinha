@@ -30,8 +30,10 @@ import java.util.zip.Inflater;
 public class PlanilhaActivity extends AppCompatActivity {
     private TextView tvValor, tvJuros2;
     private ListView listView;
-    private double parcela=0,valor,juros;
+    private double parcela=0,valor,juros, total;
     private int prazo;
+
+    View viewFooter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,10 @@ public class PlanilhaActivity extends AppCompatActivity {
         tvValor.setText(""+valor);
         tvJuros2.setText(""+juros);
         listView.addHeaderView(getLayoutInflater().inflate(R.layout.header_layout,listView,false));
+        viewFooter = getLayoutInflater().inflate(R.layout.footer_layout,listView,false);
+        listView.addFooterView(viewFooter);
         gerarPlanilhaPrice();
+        calcTotJuros();
         //gerando evento para o listview
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,10 +93,12 @@ public class PlanilhaActivity extends AppCompatActivity {
         if (item.getItemId()== R.id.it_sacre) {
             Toast.makeText(this,"Acessou a opção SACRE",Toast.LENGTH_LONG).show();
             gerarPlanilhaSacre();
+            calcTotJuros();
         }
         if (item.getItemId()== R.id.it_price) {
             Toast.makeText(this,"Acessou a opção PRICE",Toast.LENGTH_LONG).show();
             gerarPlanilhaPrice();
+            calcTotJuros();
         }
 
         return super.onOptionsItemSelected(item);
@@ -104,11 +111,14 @@ public class PlanilhaActivity extends AppCompatActivity {
 
         double jurosParcela, saldoDevedor=valor;
 
+        total=0;
+
         for(int i=1; i<=prazo; i++){
             jurosParcela=saldoDevedor*juros/100;
             saldoDevedor-=parcela-jurosParcela;
             Parcela p = new Parcela(i,parcela,jurosParcela,parcela-jurosParcela,saldoDevedor);
             parcelaList.add(p);
+            total +=jurosParcela;
         }
 
         ParcelaAdapter parcelaAdapter=new ParcelaAdapter(this,
@@ -119,6 +129,7 @@ public class PlanilhaActivity extends AppCompatActivity {
     private void gerarPlanilhaSacre() {
         List<Parcela> parcelaList=new ArrayList<>();
         double amortizacao, saldoDevedor=valor;
+        total =0;
 
         for (int i = 1; i <= prazo; i ++) {
             parcela = Sacre.calcParcela(saldoDevedor, prazo - (i - 1), juros);
@@ -128,6 +139,7 @@ public class PlanilhaActivity extends AppCompatActivity {
 
             Parcela p = new Parcela(i, parcela, parcela - amortizacao, amortizacao, saldoDevedor);
             parcelaList.add(p);
+            total +=parcela-amortizacao;
         }
 
         ParcelaAdapter parcelaAdapter = new ParcelaAdapter(
@@ -137,4 +149,11 @@ public class PlanilhaActivity extends AppCompatActivity {
         );
         listView.setAdapter(parcelaAdapter);
     }
+
+    private void calcTotJuros() {
+        TextView tvTotalJuros = viewFooter.findViewById(R.id.tvTotalJuros);
+        tvTotalJuros.setText(String.format("%.2f",total));
+    }
+
+
 }
